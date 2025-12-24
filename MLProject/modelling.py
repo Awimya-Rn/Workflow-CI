@@ -5,7 +5,6 @@ import mlflow
 import mlflow.sklearn
 import argparse
 import os
-import shutil
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
@@ -19,12 +18,12 @@ def train_model(data_path, n_estimators):
     y = df[target]
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    mlflow.sklearn.autolog()
     
+    mlflow.sklearn.autolog()
+
     print(f"Memulai training (n_estimators={n_estimators})...")
 
-    with mlflow.start_run():
+    with mlflow.start_run() as run:
         model = RandomForestClassifier(n_estimators=n_estimators, random_state=42)
         model.fit(X_train, y_train)
         
@@ -52,7 +51,7 @@ def train_model(data_path, n_estimators):
         
         os.makedirs("output", exist_ok=True)
         joblib.dump(model, "output/model.joblib")
-        print("Model selesai dilatih.")
+        print("Model selesai dilatih dan disimpan di output/model.joblib.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
