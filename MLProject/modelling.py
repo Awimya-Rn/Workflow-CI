@@ -19,12 +19,7 @@ def train_model(data_path, n_estimators):
     y = df[target]
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    experiment_name = "Mental_Health_CI_Retraining"
-    mlflow.set_experiment(experiment_name)
-    
-    experiment_name = "Mental_Health_CI_Retraining"
-    mlflow.set_experiment(experiment_name)
+
     mlflow.sklearn.autolog()
     
     print(f"Memulai training (n_estimators={n_estimators})...")
