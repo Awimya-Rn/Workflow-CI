@@ -5,10 +5,10 @@ channels:
 dependencies:
   - python=3.10
   - pip
+  - scikit-learn
+  - pandas
+  - numpy
+  - joblib
   - pip:
     - mlflow
-    - scikit-learn
-    - pandas
-    - numpy
-    - joblib
     - setuptools
