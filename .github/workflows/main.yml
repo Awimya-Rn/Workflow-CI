@@ -1,4 +1,4 @@
-name: ML Workflow CI
+name: ML Workflow CI (Conda)
 
 on:
   push:
@@ -12,6 +12,9 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
+
+    env:
+      MLFLOW_TRACKING_URI: "file://${{ github.workspace }}/mlruns"
 
     steps:
     - name: Checkout code
@@ -31,9 +34,11 @@ jobs:
       run: |
         conda info
         conda list
+        echo "Tracking URI: $MLFLOW_TRACKING_URI"
 
     - name: Run MLflow Project
       run: |
+        # Script ini akan otomatis menggunakan Env Var MLFLOW_TRACKING_URI di atas
         mlflow run MLProject --env-manager=local --experiment-name "CI_Conda_Run"
 
     - name: Upload Model Artifact
