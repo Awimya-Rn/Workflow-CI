@@ -1,4 +1,4 @@
-name: ML Workflow CI 
+name: ML Workflow CI
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
 
     - name: Run MLflow Project
       run: |
-        mlflow run MLProject --no-conda --experiment-name "CI_Conda_Run"
+        mlflow run MLProject --env-manager=local --experiment-name "CI_Conda_Run"
 
     - name: Upload Model Artifact
       uses: actions/upload-artifact@v4
