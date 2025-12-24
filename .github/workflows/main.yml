@@ -1,4 +1,4 @@
-name: ML Workflow CI (Conda)
+name: ML Workflow CI 
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash -l {0} 
+        shell: bash -l {0}
 
     steps:
     - name: Checkout code
@@ -20,27 +20,24 @@ jobs:
     - name: Set up Miniconda
       uses: conda-incubator/setup-miniconda@v3
       with:
-        activate-environment: "mental_health_env" 
-        environment-file: MLProject/conda.yaml 
-        python-version: 3.10
+        activate-environment: "mental_health_env"
+        environment-file: MLProject_Folder/conda.yaml
         auto-activate-base: false
-        miniforge-variant: Mambaforge
-        use-mamba: true 
+        miniforge-variant: Miniforge3
+        miniforge-version: latest
+        use-mamba: true
 
-    - name: Verify Environment & Install MLflow (if needed)
+    - name: Verify Environment
       run: |
-        conda activate mental_health_env
+        conda info
         conda list
-        # Pastikan MLflow terinstall (jika belum tercover di pip section conda.yaml)
-        pip install mlflow
 
     - name: Run MLflow Project
       run: |
-        conda activate mental_health_env
-        mlflow run MLProject --no-conda --experiment-name "CI_Conda_Run"
+        mlflow run MLProject_Folder --no-conda --experiment-name "CI_Conda_Run"
 
     - name: Upload Model Artifact
       uses: actions/upload-artifact@v4
       with:
         name: trained-model
-        path: MLProject/output/model.joblib
+        path: MLProject_Folder/output/model.joblib
