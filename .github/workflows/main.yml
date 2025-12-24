@@ -21,7 +21,7 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       with:
         activate-environment: "mental_health_env"
-        environment-file: MLProject_Folder/conda.yaml
+        environment-file: MLProject/conda.yaml
         auto-activate-base: false
         miniforge-variant: Miniforge3
         miniforge-version: latest
@@ -34,10 +34,10 @@ jobs:
 
     - name: Run MLflow Project
       run: |
-        mlflow run MLProject_Folder --no-conda --experiment-name "CI_Conda_Run"
+        mlflow run MLProject --no-conda --experiment-name "CI_Conda_Run"
 
     - name: Upload Model Artifact
       uses: actions/upload-artifact@v4
       with:
         name: trained-model
-        path: MLProject_Folder/output/model.joblib
+        path: MLProject/output/model.joblib
